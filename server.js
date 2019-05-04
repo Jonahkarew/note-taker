@@ -4,10 +4,7 @@ var express= require("express");
 var app = express();
 
 //install path
-var path = require("path")
-
-//get mysql
-var mysql = require("mysql");
+var path = require("path");
 
 //set the port and enable it so heroku can hijack it
 var PORT = process.env.PORT || 3000;
@@ -33,12 +30,23 @@ app.get("/notes", function(req, res){
 app.get("/api/notes", function(req, res){
   connection.query("SELECT * FROM notes", function(err, dbNotes){
     if(err){
-      res.json(err)
+      return res.json(err)
     }
     res.json(dbNotes)
     // console.log(dbNotes);
   })
-  
+})
+//route for posting user notes
+app.post("/api/notes", function(req, res){
+  connection.query("INSERT INTO notes SET ?",
+  req.body, function(err, res){
+    if (err) {
+      return res.json(err)
+    }
+    else{
+      console.log(res)
+    }
+  })
 })
 
 

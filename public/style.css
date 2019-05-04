@@ -1,0 +1,17 @@
+a{
+  color: #ffffff;
+};
+
+.fa-trash:before {
+    content: "\f1f8";
+    color: #cccccc;
+};
+
+.fa{
+  color: #cccccc;
+}
+
+body{
+
+  background: black;
+}

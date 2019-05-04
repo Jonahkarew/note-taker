@@ -7,7 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-  <title>Title</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>Notes</title>
 </head>
 
 <body>
@@ -70,32 +74,9 @@
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
   <script type="text/javascript">
-    $("#submit").on("click", function (event) {
-      event.preventDefault();
 
-      var newNote = {
-        title: $("#note-title").val().trim(),
-
-        body: $("#note-body").val().trim()
-      };
-
-      // console.log(newNote);
-
-      $.ajax({
-          url: "/api/postnote",
-          method: "POST",
-          data: newNote
-        })
-        .then(function (data) {
-          $("#note-title").val("");
-          $("#note-body").val("")
-        })
-
-    })
 
     function printThemNotes() {
       $.ajax({
@@ -108,18 +89,19 @@
           // console.log("---------------------------");
 
           //loop through each of the notes
-          for (var i = 1; i < tableData.length; i++) {
+          for (var i = 0; i < tableData.length; i++) {
             //referencce the list and fill it with tble data
             var noteList = $("#notes-list");
 
             var listItem = $("<li class='list-group-item'>");
 
             listItem.append(
-              $("<h3>").text("Note#" + (i + 1)),
-              $("hr"),
+              $("<h3>").text("Note #" + (i + 1)),
+              $("<hr>"),
               $("<h3>").text("Title: " + tableData[i].title),
               $("<h4>").text(tableData[i].body),
-              $("<h4>").text(tableData[i].created_at)
+              $("<a href='#' class='delButton fas fa-trash'>")
+              // $("<h4>").text(tableData[i].created_at)
               // $("/li")
             );
             noteList.append(listItem)
@@ -127,6 +109,33 @@
 
         })
     }
+
+
+    //submit button logs note to sql
+    $("#submit").on("click", function (event) {
+      event.preventDefault();
+
+      var newNote = {
+        title: $("#note-title").val().trim(),
+
+        body: $("#note-body").val().trim()
+      };
+
+      // console.log(newNote);
+
+      $.ajax({
+          url: "/api/notes",
+          method: "POST",
+          data: newNote
+        })
+        .then(function (data) {
+          $("#note-title").val("");
+          $("#note-body").val("")
+        })
+        $("#note-title").val("");
+        $("#note-body").val("")
+        printThemNotes();
+    })
 
     //run the query
     printThemNotes();
