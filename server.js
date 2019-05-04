@@ -22,17 +22,35 @@ var connection = mysql.createConnection({
   database: "notetaker_db"
 });
 
+//these are the html routes
+//show the landing page
 app.get("/", function(req,res){
   res.sendFile(path.join(__dirname, "/public/index.html"))
 })
 
+//show the notes page
 app.get("/notes", function(req, res){
   res.sendFile(path.join(__dirname, "/public/notes.html"))
 })
 
+//these are the api routes
+//get current notes from db when on notes page
+app.get("/api/notes", function(req, res){
+  connection.query("SELECT * FROM notes", function(err, dbNotes){
+    if(err){
+      res.json(err)
+    }
+    res.json(dbNotes)
+    // console.log(dbNotes);
+  })
+  
+})
 
 
-
+//redirect wrong urls
+app.get("/*", function(req, res){
+  res.sendFile(path.join(__dirname, "public/index.html"))
+})
 
 
 
