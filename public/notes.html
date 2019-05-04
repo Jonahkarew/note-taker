@@ -46,7 +46,7 @@
                 <label for="note-body">Note Content</label>
                 <input type="text" class="form-control" id="note-body">
               </div>
-              <button id="submit" type="submit" class="btn btn-success">Submit</button>
+              <button id="submit" type="submit" class="btn btn-success btn-block">Submit</button>
 
 
 
@@ -96,10 +96,10 @@
             var listItem = $("<li class='list-group-item'>");
 
             listItem.append(
-              $("<h3>").text("Note #" + (i + 1)),
+              $("<h4>").text("Note #" + (i + 1)),
               $("<hr>"),
-              $("<h3>").text("Title: " + tableData[i].title),
-              $("<h4>").text(tableData[i].body),
+              $("<h4>").text("Title: " + tableData[i].title),
+              $("<h5>").text(tableData[i].body),
               $("<a href='#' class='delButton fas fa-trash'>")
               // $("<h4>").text(tableData[i].created_at)
               // $("/li")
@@ -133,11 +133,14 @@
           $("#note-body").val("")
         })
         $("#note-title").val("");
-        $("#note-body").val("")
+        $("#note-body").val("");
+
+        //empty the list of what's already there
+        $("#notes-list").empty();
         printThemNotes();
     })
 
-    //run the query
+    //run the query to print notes
     printThemNotes();
   </script>
 </body>
