@@ -15,12 +15,7 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "open",
-  database: "notetaker_db"
-});
+var connection = require("./db/connection")
 
 //these are the html routes
 //show the landing page
