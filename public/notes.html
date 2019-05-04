@@ -105,7 +105,7 @@
               // $("/li")
             );
             listItem.attr("note-data", tableData[i].id)
-            console.log(tableData[i].id)
+            // console.log(tableData[i].id)
             noteList.append(listItem)
           }
 
@@ -159,6 +159,7 @@
         method: "DELETE"
       })
       .then(function(){
+        $("#notes-list").empty();
         printThemNotes();
       })
     })
