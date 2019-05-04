@@ -44,10 +44,19 @@ app.post("/api/notes", function(req, res){
       return res.json(err)
     }
     else{
-      console.log(res)
+      console.log("note successfully posted")
     }
   })
 })
+
+//route for deleting notes by id from db
+app.delete("/api/notes/:id", function(req, res) {
+  connection.query("DELETE FROM notes WHERE id = ?", [req.params.id], function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
 
 
 //redirect wrong urls

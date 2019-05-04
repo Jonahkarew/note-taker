@@ -84,7 +84,7 @@
           method: "GET"
         })
         .then(function (tableData) {
-          console.log(tableData);
+          // console.log(tableData);
           // console.log("ok let's try this");
           // console.log("---------------------------");
 
@@ -100,10 +100,12 @@
               $("<hr>"),
               $("<h4>").text("Title: " + tableData[i].title),
               $("<h5>").text(tableData[i].body),
-              $("<a href='#' class='delButton fas fa-trash'>")
+              $("<i class='delete-note fas fa-trash'>")
               // $("<h4>").text(tableData[i].created_at)
               // $("/li")
             );
+            listItem.attr("note-data", tableData[i].id)
+            console.log(tableData[i].id)
             noteList.append(listItem)
           }
 
@@ -139,6 +141,31 @@
         $("#notes-list").empty();
         printThemNotes();
     })
+
+    //make the del button removenote from db
+
+    $(document).on("click", ".delete-note", function(event){
+      //stop delButton from refreshing the page
+      // event.preventDefault();
+        //just used i beccause it looked better and so this isn't necessary
+
+      //variable for note id
+      var noteHTMLId = $(this).parent().attr('note-data');
+      var intNoteId = parseInt(noteHTMLId);
+      console.log(intNoteId);
+      console.log("this button at least clicks");
+      $.ajax({
+        url: "/api/notes/" +intNoteId,
+        method: "DELETE"
+      })
+      .then(function(){
+        printThemNotes();
+      })
+    })
+   
+
+
+
 
     //run the query to print notes
     printThemNotes();
